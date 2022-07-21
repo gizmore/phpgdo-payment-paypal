@@ -15,7 +15,7 @@ use GDO\Util\Common;
 */
 final class ConfirmCheckout extends MethodPayment
 {
-	public function isAlwaysTransactional() { return true; }
+	public function isAlwaysTransactional() : bool { return true; }
 	
 	public function execute()
 	{
