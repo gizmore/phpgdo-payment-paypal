@@ -2,7 +2,7 @@
 namespace GDO\PaymentPaypal;
 
 use GDO\Core\Logger;
-use GDO\Core\GDT_Error;
+use GDO\UI\GDT_Error;
 
 define("PAYPAL_ERROR_INSUFFICIENT_FUNDS", 10321);
 /**
