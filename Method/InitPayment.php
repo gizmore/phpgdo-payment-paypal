@@ -72,7 +72,7 @@ final class InitPayment extends MethodPayment
 			// Redirect to paypal.com here
 			$token = urldecode($resArray["TOKEN"]);
 // 			$order->saveVar('order_xtoken', $token);
-			return Website::redirect(PAYPAL_URL . $token);
+			return $this->redirect(PAYPAL_URL . $token);
 		}
 		else
 		{
