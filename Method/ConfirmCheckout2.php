@@ -64,7 +64,6 @@ final class ConfirmCheckout2 extends MethodPayment
 		
 		// Get Payment module;
 		$module2 = $order->getOrderModule();
-		$module2->onLoadLanguage();
 		
 		Paypal_Util::logResArray($resArray);
 		
