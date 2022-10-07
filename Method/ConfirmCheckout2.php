@@ -9,6 +9,11 @@ use GDO\Util\Common;
 
 final class ConfirmCheckout2 extends MethodPayment
 {
+	public function getMethodTitle(): string
+	{
+		return t('payment');
+	}
+	
 	public function execute()
 	{
 		$mp = Module_Payment::instance();
