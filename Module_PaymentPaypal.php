@@ -1,21 +1,23 @@
 <?php
 namespace GDO\PaymentPaypal;
 
-use GDO\Payment\PaymentModule;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Int;
 use GDO\Core\GDT_Secret;
 use GDO\Core\GDT_String;
+use GDO\Payment\PaymentModule;
 use GDO\UI\GDT_Divider;
 
 final class Module_PaymentPaypal extends PaymentModule
 {
-	public function getDependencies() : array { return ['Payment']; }
-	
-	public function onLoadLanguage() : void { $this->loadLanguage('lang/paypal'); }
-	public function getConfig() : array
+
+	public function getDependencies(): array { return ['Payment']; }
+
+	public function onLoadLanguage(): void { $this->loadLanguage('lang/paypal'); }
+
+	public function getConfig(): array
 	{
-		return array_merge(parent::getConfig(), array(
+		return array_merge(parent::getConfig(), [
 			GDT_Divider::make('paypal_api_settings'),
 			GDT_Checkbox::make('paypal_api_sandbox')->initial('1'),
 			GDT_Secret::make('paypal_api_username')->initial('CBusch1980_api1.gmx.de'),
@@ -25,18 +27,9 @@ final class Module_PaymentPaypal extends PaymentModule
 			GDT_Checkbox::make('paypal_proxy')->initial('0'),
 			GDT_String::make('paypal_proxy_host')->ascii()->caseS()->initial('127.0.0.1'),
 			GDT_Int::make('paypal_proxy_port')->unsigned()->min(1)->max(65535)->initial('8080'),
-		));
+		]);
 	}
-	public function cfgSandbox() { return $this->getConfigValue('paypal_api_sandbox'); }
-	public function cfgUsername() { return $this->getConfigVar('paypal_api_username'); }
-	public function cfgPasword() { return $this->getConfigVar('paypal_api_password'); }
-	public function cfgSignature() { return $this->getConfigVar('paypal_api_signature'); }
-	public function cfgApiUri() { return $this->cfgSandbox() ? 'https://www.sandbox.paypal.com/webscr&cmd=_express-checkout&token=' : 'https://www.paypal.com/webscr&cmd=_express-checkout&token='; }
-	public function cfgEndpoint() { return $this->cfgSandbox() ? 'https://api-3t.sandbox.paypal.com/nvp' : 'https://api-3t.paypal.com/nvp'; }
-	public function cfgProxy() { return $this->getConfigValue('paypal_proxy'); }
-	public function cfgProxyHost() { return $this->getConfigVar('paypal_proxy_host'); }
-	public function cfgProxyPort() { return $this->getConfigVar('paypal_proxy_port'); }
-	
+
 	public function includePaypal()
 	{
 		define('PAYPAL_VERSION', '2.3');
@@ -50,5 +43,23 @@ final class Module_PaymentPaypal extends PaymentModule
 		define('PAYPAL_PROXY_PORT', $this->cfgProxyPort());
 		require $this->filePath('Paypal_Util.php');
 	}
+
+	public function cfgUsername() { return $this->getConfigVar('paypal_api_username'); }
+
+	public function cfgPasword() { return $this->getConfigVar('paypal_api_password'); }
+
+	public function cfgSignature() { return $this->getConfigVar('paypal_api_signature'); }
+
+	public function cfgEndpoint() { return $this->cfgSandbox() ? 'https://api-3t.sandbox.paypal.com/nvp' : 'https://api-3t.paypal.com/nvp'; }
+
+	public function cfgSandbox() { return $this->getConfigValue('paypal_api_sandbox'); }
+
+	public function cfgApiUri() { return $this->cfgSandbox() ? 'https://www.sandbox.paypal.com/webscr&cmd=_express-checkout&token=' : 'https://www.paypal.com/webscr&cmd=_express-checkout&token='; }
+
+	public function cfgProxy() { return $this->getConfigValue('paypal_proxy'); }
+
+	public function cfgProxyHost() { return $this->getConfigVar('paypal_proxy_host'); }
+
+	public function cfgProxyPort() { return $this->getConfigVar('paypal_proxy_port'); }
 
 }
