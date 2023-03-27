@@ -1,6 +1,7 @@
 <?php
 namespace GDO\PaymentPaypal\Method;
 
+use GDO\Core\GDT;
 use GDO\Language\Trans;
 use GDO\Payment\GDO_Order;
 use GDO\Payment\GDT_Money;
@@ -11,7 +12,7 @@ use GDO\PaymentPaypal\Paypal_Util;
 final class InitPayment extends MethodPayment
 {
 
-	public function execute()
+	public function execute(): GDT
 	{
 		if (!($order = $this->getOrder()))
 		{

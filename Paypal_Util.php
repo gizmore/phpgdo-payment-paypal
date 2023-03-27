@@ -4,7 +4,7 @@ namespace GDO\PaymentPaypal;
 use GDO\Core\Logger;
 use GDO\UI\GDT_Error;
 
-define('PAYPAL_ERROR_INSUFFICIENT_FUNDS', 10321);
+//define('PAYPAL_ERROR_INSUFFICIENT_FUNDS', 10321);
 
 /**
  * Paypal Helper Class
@@ -103,21 +103,8 @@ final class Paypal_Util
 			$back .= "$errorCode: $shortMessage<br>" .
 				" - $longMessage<br><br>";
 		}
-		return GDT_Error::with('err_paypal', [$back]);
+		return GDT_Error::make()->text('err_paypal', [$back]);
 	}
-
-// 	public static function checkPaypalErrorCode($code)
-// 	{
-// 		$count=0;
-// 		while (isset($resArray["L_SHORTMESSAGE".$count]))
-// 		{
-// 			if ($resArray["L_ERRORCODE".$count] == $code)
-// 			{
-// 				return true;
-// 			}
-// 		}
-// 		return false;
-// 	}
 
 	public static function logResArray(array $resArray)
 	{

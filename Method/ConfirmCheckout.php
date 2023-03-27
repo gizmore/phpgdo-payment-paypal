@@ -1,6 +1,7 @@
 <?php
 namespace GDO\PaymentPaypal\Method;
 
+use GDO\Core\GDT;
 use GDO\Payment\GDO_Order;
 use GDO\Payment\MethodPayment;
 use GDO\PaymentPaypal\Paypal_Util;
@@ -24,7 +25,7 @@ final class ConfirmCheckout extends MethodPayment
 
 	public function isAlwaysTransactional(): bool { return true; }
 
-	public function execute()
+	public function execute(): GDT
 	{
 		$paypaltoken = Common::getRequestString('token');
 		if (
@@ -50,7 +51,7 @@ final class ConfirmCheckout extends MethodPayment
 		if ($ack === 'SUCCESS')
 		{
 			$order->saveVar('order_xtoken', serialize($resArray));
-			$this->renderOrder($order)->addField($this->templateButton());
+			return $this->renderOrder($order)->addField($this->templateButton());
 		}
 		else
 		{

@@ -1,6 +1,7 @@
 <?php
 namespace GDO\PaymentPaypal\Method;
 
+use GDO\Core\GDT;
 use GDO\Payment\GDO_Order;
 use GDO\Payment\MethodPayment;
 use GDO\Payment\Module_Payment;
@@ -15,7 +16,7 @@ final class ConfirmCheckout2 extends MethodPayment
 		return t('payment');
 	}
 
-	public function execute()
+	public function execute(): GDT
 	{
 		$mp = Module_Payment::instance();
 
